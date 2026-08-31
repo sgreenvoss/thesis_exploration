@@ -1,4 +1,4 @@
-# Initial testing for the drone project
+# Initial testing for the project
 
 ## vision_test.py
 
@@ -9,19 +9,28 @@
 Uses YOLO from ultralytics to identify a person in real-time webcam video, then checks whether there is an apriltag within the bounding box of the identified person, and if so, if it corresponds to a known person. 
 
 e.g.: 
-![image](img/no_id.png)
-Since the apriltag is outside of the bounding box identifying me, it is not labelled as Stella.
 
-![image](img/person_identified.png)
-Now that it is inside my bounding box, it gets labelled as Stella. 
-
+<table>
+  <tr>
+    <td width=400><img src="img/no_id.png" width=300></td>
+    <td width=400><img src="img/person_identified.png" width=300></td>
+  </tr>
+  <tr>
+    <td>Since the apriltag is outside of the bounding box identifying me, it is not labelled as Stella.
+</td>
+    <td>Now that it is inside my bounding box, it gets labelled as Stella. 
+</td>
+  </tr>
+</table>
 On my machine, this runs reasonably quickly. It does not yet work properly for multiple people and I have not tested the program in varying lighting conditions.
 
 
 ## audio_test.py
 ### Requirements:
 SpeechRecognition needs CUDA version 12. Probably there are better package management solutions than what I ended up doing but here's what worked.
+
 `pip install pyaudio SpeechRecognition faster-whisper schedule gputil `
+
 `pip install cuda-toolkit[all]==12.8`
 
 ### Description:
