@@ -49,9 +49,11 @@ def listen_loop():
 
 # ---------- vision side ----------
 def main():
+    options = ["person", "glasses"]
     threading.Thread(target=listen_loop, daemon=True).start()
 
     model = YOLOWorld("yolov8s-worldv2.pt")   # downloads on first use
+    model.set_classes(options)
     current = None
 
     cap = cv2.VideoCapture(0)
@@ -63,19 +65,25 @@ def main():
         # pick up newest spoken query, if any
         try:
             while True:
-                current = query_q.get_nowait()
-                model.set_classes([current])
-                print("now looking for:", current)
+                query = query_q.get_nowait()
+                if query in options:
+                #model.set_classes([current])
+                    current = query
+                    print("looking for", query)
+                else:
+                    print("I don't know", query)
         except queue.Empty:
             pass
 
         if current:
+            idx = options.index(current)
             res = model.predict(frame, conf=0.25, verbose=False)[0]
             for box in res.boxes:
-                x1, y1, x2, y2 = map(int, box.xyxy[0])
-                cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 255, 0), 2)
-                cv2.putText(frame, f"{current} {float(box.conf):.2f}", (x1, y1 - 8),
-                            cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 255, 0), 2)
+                if box.cls[0] == idx:
+                    x1, y1, x2, y2 = map(int, box.xyxy[0])
+                    cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 255, 0), 2)
+                    cv2.putText(frame, f"{current} {float(box.conf):.2f}", (x1, y1 - 8),
+                                cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 255, 0), 2)
             cv2.putText(frame, f"searching: {current}", (10, 25),
                         cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255, 255, 255), 2)
 
