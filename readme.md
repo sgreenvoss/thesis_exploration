@@ -1,5 +1,29 @@
 # Initial testing for the project
 
+## Comparison of different models
+In [this video](https://youtu.be/T5Sdp9LRbYQ) you can see how three models detect different things as wildfires. I recommend setting quality as high as possible and setting the playback speed to 0.25 to better understand what's going on. 
+
+That compares these three models:
+
+[yolo26m-UAV-fire-smoke-detection](https://huggingface.co/xiazh0219/yolo26m-UAV-fire-smoke-detection)
+
+[YOLOv10-Fire-and-Smoke-Detection](https://huggingface.co/TommyNgx/YOLOv10-Fire-and-Smoke-Detection)
+
+[yolov26-fire-detection](https://huggingface.co/SalahALHaismawi/yolov26-fire-detection/tree/main)
+
+| Model | Average of preprocess |	Average of inference | StdDev of inference | Average of postprocess |
+| ----- | --------------------- | -------------------- | ------------------- | ---------------------- |
+| yolo_models/yolo26m-UAV-fire-smoke-detection.pt |	1.378775347	| 196.4084274 |	10.15393106 |	0.556997375 |
+| yolo_models/YOLOv10-Fire-and-Smoke-Detection.pt	| 1.3429544	| 398.2888549	| 18.67942834	| 0.348619249 |
+| yolo_models/yolov26-fire-detection.pt	| 1.378190736	| 77.37639341	| 5.595443642	| 0.332997118 |
+
+
+## find_me.py
+### Requirements:
+All of the below requirements + Ollama (which requires both a pip install and a download).
+It may 
+
+
 ## vision_test.py
 
 ### Requirements:
